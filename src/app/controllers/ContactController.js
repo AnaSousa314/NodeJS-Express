@@ -1,12 +1,12 @@
-const { response } = require('express');
 const ContactsRepository = require('../repositories/ContactsRepository')
 
 class ContactController{
   async index(req,res){
     //Listar todos os registros
-    const contacts = await ContactsRepository.findAll();
+    // const contacts = await ContactsRepository.findAll();
 
-    res.status(200).json(contacts);
+    // res.status(200).json(contacts);
+    res.send(req.appId)
   }
 
   async show(req,res){
