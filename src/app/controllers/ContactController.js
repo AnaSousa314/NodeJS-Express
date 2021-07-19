@@ -3,10 +3,9 @@ const ContactsRepository = require('../repositories/ContactsRepository')
 class ContactController{
   async index(req,res){
     //Listar todos os registros
-    // const contacts = await ContactsRepository.findAll();
+    const contacts = await ContactsRepository.findAll();
 
-    // res.status(200).json(contacts);
-    res.send(req.appId)
+    res.status(200).json(contacts);
   }
 
   async show(req,res){
@@ -21,8 +20,25 @@ class ContactController{
     res.json(contact);
   }
 
-  store(){
+  async store(req,res){
     // Criar novo registro
+    const {name,email,phone,category_id}=req.body;
+
+    if(!name){
+      return res.status(400).json({error: 'Name is required'})
+    }
+
+    const contactExists = await ContactsRepository.findByEmail(email);
+
+    if(contactExists){
+      return res.status(400).json({error:"This e-mail is already been taken"});
+    }
+
+    const contact = await ContactsRepository.create({
+      name,email,phone,category_id
+    });
+
+    res.json(contact);
   }
 
   update(){
