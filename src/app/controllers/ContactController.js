@@ -1,3 +1,4 @@
+const { response } = require('express');
 const ContactsRepository = require('../repositories/ContactsRepository')
 
 class ContactController{
@@ -8,9 +9,16 @@ class ContactController{
     res.status(200).json(contacts);
   }
 
-  show(){
+  async show(req,res){
     // Obter UM registro
+    const {id} = req.params
+    const contact = await ContactsRepository.findById(id);
 
+    if(!contact){
+      return res.status(404).json({error: 'User Not Found'})
+    }
+
+    res.json(contact);
   }
 
   store(){
@@ -21,7 +29,18 @@ class ContactController{
 
   }
 
-  delete(){
+  async delete(req,res){
+    const {id} = req.params;
+
+    const contact = await ContactsRepository.findById(id);
+
+    if(!contact){
+      return res.status(404).json({error: 'User Not Found'})
+    }
+
+    await ContactsRepository.delete(id);
+    // 204: No contact
+    res.sendStatus(204);
 
   }
 
