@@ -1,23 +1,4 @@
-const {v4} = require('uuid');
-
-const db = require('../../database');//use db ao inves de desestruturar, pois fica mais semantico. const {query} =require('../../database');
-
-let contacts = [
-  {
-    id: v4(),
-    name: 'Ana',
-    email: 'ana@email.com',
-    phone: '123123123',
-    category_id: v4(),
-  },
-  {
-    id: v4(),
-    name: 'Jose',
-    email: 'jose@email.com',
-    phone: '489523123',
-    category_id: v4(),
-  },
-];
+const db = require('../../database');
 
 class ContatctsRepository{
   async findAll(orderBy = 'ASC'){
@@ -64,11 +45,9 @@ class ContatctsRepository{
     return row;
   }
 
-  delete(id){
-    return new Promise((resolve)=>{
-      contacts = contacts.filter((contact)=>contact.id !== id);
-      resolve();
-    });
+  async delete(id){
+    const deleteOp = await db.query(`DELETE FROM contacts WHERE id=$1`,[id]);
+    return deleteOp;
   }
 
 
