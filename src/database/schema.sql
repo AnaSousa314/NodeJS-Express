@@ -13,5 +13,7 @@ CREATE TABLE IF NOT EXISTS contacts (
   email VARCHAR UNIQUE,
   phone VARCHAR,
   category_id UUID,
-  FOREIGN KEY(category_id) REFERENCES categories(id)
+  FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL
 );
+
+DROP TABLE contacts;
