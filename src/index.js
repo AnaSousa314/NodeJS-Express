@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 require('express-async-errors');//para tratar erros assincronos. yarn add express-async-errors
 
@@ -15,4 +16,4 @@ app.use((error,req,res,next)=>{
   res.sendStatus(500);
 });
 
-app.listen(3000, () => console.log('🔥 Server started at http://localhost:3000'));
+app.listen(process.env.PORT, () => console.log(`🔥 Server started at http://${process.env.HOST}:${process.env.PORT}`));

@@ -1,31 +1,35 @@
-const ContactsRepository = require('../repositories/ContactsRepository')
+const ContactsRepository = require('../repositories/ContactsRepository');
 
-class ContactController{
-  async index(req,res){
+class ContactController {
+  async index(req,res) {
     const {orderBy} = req.query;
     //Listar todos os registros
     const contacts = await ContactsRepository.findAll(orderBy);
 
+    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+
+    //Wildcard - Cunringa - libera todas as origens
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.status(200).json(contacts);
   }
 
-  async show(req,res){
+  async show(req,res) {
     // Obter UM registro
     const {id} = req.params
     const contact = await ContactsRepository.findById(id);
 
-    if(!contact){
-      return res.status(404).json({error: 'User Not Found'})
+    if ( !contact ) {
+      return res.status(404).json( { error: 'User Not Found' } );
     }
 
     res.json(contact);
   }
 
-  async store(req,res){
+  async store(req,res) {
     // Criar novo registro
-    const {name,email,phone,category_id}=req.body;
+    const { name, email, phone, category_id } = req.body;
 
-    if(!name){
+    if (!name){
       return res.status(400).json({error: 'Name is required'})
     }
 
