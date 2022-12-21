@@ -9,7 +9,7 @@ class ContactController {
     // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
 
     //Wildcard - Cunringa - libera todas as origens
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    // res.setHeader('Access-Control-Allow-Origin', '*');
     res.status(200).json(contacts);
   }
 
