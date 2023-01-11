@@ -4,7 +4,7 @@ class CategoryController{
   async index(req,res){
     const categories = await CategoriesRepository.findAll();
 
-    res.json(categories);
+    res.status(200).json(categories);
   }
 
   // start
@@ -17,7 +17,7 @@ class CategoryController{
       res.status(404).json({error: 'Category Not Found'});
     }
 
-    res.json(category);
+    res.status(200).json(category);
   }//end
 
   async store(req,res){
@@ -36,7 +36,7 @@ class CategoryController{
     // end
     const category = await CategoriesRepository.create({name});
 
-    res.json(category);
+    res.status(201).json(category);
   }
 
   //start
@@ -56,7 +56,7 @@ class CategoryController{
 
     const category = await CategoriesRepository.update(id,{name});
 
-    res.json(category);
+    res.status(201).json(category);
   }
 
   async delete(req,res){
